@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<title>Gesichtsübungen</title>
+
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0f172a" />
+
+<!-- iOS: als installierbare Vollbild-App erkennen -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Übungen" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="stage">
+  <div id="playerWrap">
+    <div id="player"></div>
+  </div>
+  <div id="tapCatcher"></div>
+  <div id="seekLeftIndicator" class="seek-indicator seek-indicator-left">&#x25c0;&#x25c0; 10s</div>
+  <div id="seekRightIndicator" class="seek-indicator seek-indicator-right">10s &#x25b6;&#x25b6;</div>
+</div>
+
+<button id="settingsBtn" aria-label="Video ändern">⚙</button>
+
+<div id="setup" class="hidden">
+  <div class="setup-box">
+    <h1>Video-Link einfügen</h1>
+    <p>Füge den YouTube-Link zu deinem Übungsvideo ein. Er wird nur auf diesem
+    iPhone gespeichert.</p>
+    <input id="videoInput" type="url" inputmode="url" autocomplete="off"
+      autocapitalize="off" autocorrect="off" spellcheck="false"
+      placeholder="https://youtu.be/..." />
+    <div id="setupError" class="error hidden"></div>
+    <button id="saveBtn">Speichern &amp; starten</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
