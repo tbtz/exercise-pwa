@@ -155,12 +155,31 @@
     }, DOUBLE_TAP_MS);
   }
 
+  var nosleepVideo = document.getElementById("nosleepVideo");
+
+  function startNoSleepVideo() {
+    // iOS ignores the Wake Lock API in standalone home-screen apps in some
+    // versions, but keeps the screen on while a native <video> is playing.
+    // This silent looping video is a fallback for that case.
+    if (!nosleepVideo) return;
+    var p = nosleepVideo.play();
+    if (p && typeof p.catch === "function") {
+      p.catch(function () {
+        // ignore, will retry on the next tap/visibilitychange
+      });
+    }
+  }
+
   function requestWakeLock() {
+    startNoSleepVideo();
     if (!("wakeLock" in navigator)) return;
     navigator.wakeLock
       .request("screen")
       .then(function (lock) {
         wakeLock = lock;
+        lock.addEventListener("release", function () {
+          wakeLock = null;
+        });
       })
       .catch(function () {
         // ignore, e.g. not allowed in this context
@@ -170,6 +189,12 @@
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "visible") requestWakeLock();
   });
+
+  if (nosleepVideo) {
+    nosleepVideo.addEventListener("pause", function () {
+      if (document.visibilityState === "visible") startNoSleepVideo();
+    });
+  }
 
   function loadYouTubeApi() {
     if (window.YT && window.YT.Player) {
@@ -247,6 +272,7 @@
     var x = e.clientX - rect.left;
     var zone = x < rect.width / 2 ? "left" : "right";
     handleTap(zone);
+    requestWakeLock();
   });
 
   window.addEventListener("resize", sizePlayer);
