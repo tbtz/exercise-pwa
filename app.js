@@ -16,9 +16,6 @@
   var player = null;
   var settingsFadeTimer = null;
   var wakeLock = null;
-  var introCover = document.getElementById("introCover");
-  var introCoverTimer = null;
-  var INTRO_COVER_MS = 4500;
 
   var DOUBLE_TAP_MS = 300;
   var SEEK_SECONDS = 10;
@@ -105,15 +102,6 @@
     settingsFadeTimer = setTimeout(function () {
       settingsBtn.classList.remove("visible");
     }, 2500);
-  }
-
-  function showIntroCoverBriefly() {
-    if (!introCover) return;
-    introCover.classList.remove("hidden");
-    if (introCoverTimer) clearTimeout(introCoverTimer);
-    introCoverTimer = setTimeout(function () {
-      introCover.classList.add("hidden");
-    }, INTRO_COVER_MS);
   }
 
   function togglePlayPause() {
@@ -228,7 +216,6 @@
     sizePlayer();
     if (player && typeof player.loadVideoById === "function") {
       player.loadVideoById(videoId);
-      showIntroCoverBriefly();
       return;
     }
     player = new YT.Player("player", {
@@ -252,7 +239,6 @@
           e.target.mute();
           e.target.playVideo();
           requestWakeLock();
-          showIntroCoverBriefly();
         },
       },
     });
