@@ -35,6 +35,20 @@ html, body {
   border: 0;
 }
 
+/* Briefly covers YouTube's own title/channel overlay, which is shown for a
+   few seconds when a video starts and can't be disabled via player params. */
+#introCover {
+  position: absolute;
+  inset: 0;
+  background: #0f172a;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+#introCover.hidden {
+  opacity: 0;
+}
+
 /* Transparent layer above the YouTube iframe: blocks YouTube's own
    controls/branding taps and turns any tap into play/pause via the API. */
 #tapCatcher {

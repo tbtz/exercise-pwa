@@ -1,4 +1,4 @@
-var CACHE_NAME = "exercise-pwa-v3";
+var CACHE_NAME = "exercise-pwa-v4";
 var SHELL_FILES = [
   "./",
   "./index.html",
